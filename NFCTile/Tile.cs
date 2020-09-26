@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Nfc;
 using Android.OS;
 using Android.Provider;
 using Android.Runtime;
@@ -29,6 +30,15 @@ namespace NFCTile
         public override void OnStartListening()
         {
             base.OnStartListening();
+
+            var adapter = NfcAdapter.GetDefaultAdapter(this);
+
+            if (adapter != null && adapter.IsEnabled)
+                QsTile.State = TileState.Active;
+            else
+                QsTile.State = TileState.Inactive;
+
+            QsTile.UpdateTile();
         }
 
         public override void OnStopListening()
