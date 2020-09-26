@@ -6,6 +6,7 @@ using System.Text;
 using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Provider;
 using Android.Runtime;
 using Android.Service.QuickSettings;
 using Android.Views;
@@ -38,6 +39,15 @@ namespace NFCTile
         public override void OnTileRemoved()
         {
             base.OnTileRemoved();
+        }
+
+        public override void OnClick()
+        {
+            base.OnClick();
+            
+            var intent = new Intent(Settings.ActionNfcSettings); // As good as it gets
+            intent.AddFlags(ActivityFlags.NewTask | ActivityFlags.ClearTop);
+            StartActivityAndCollapse(intent);
         }
     }
 }
